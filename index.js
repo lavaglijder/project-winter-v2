@@ -1,3 +1,5 @@
+// Project winter bot v2
+
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Client, GatewayIntentBits, GuildScheduledEventEntityType, GuildScheduledEventPrivacyLevel, MessagePayload } from "discord.js";
 import * as dotenv from 'dotenv';
 import * as fs from "fs"

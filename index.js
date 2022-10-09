@@ -104,7 +104,7 @@ const saveFile = () => {
 
 // Date to DD/MM/YYYY HH:MM +0000 format (+0000 cause thats the timezone it gives and too lazy to convert)
 const dateToString = (date) => date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " +
- (date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()) + "+0000";
+ (date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()) + " UTC";
 
 bot.on('ready', () => {
     console.log("ready");

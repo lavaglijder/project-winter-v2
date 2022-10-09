@@ -1,20 +1,4 @@
 {
-    "1026422158798368801": {
-        "confirmed": false,
-        "reminded": false
-    },
-    "1026422244634787861": {
-        "confirmed": false,
-        "reminded": false
-    },
-    "1026422363643985950": {
-        "confirmed": false,
-        "reminded": false
-    },
-    "1026422439267270716": {
-        "confirmed": false,
-        "reminded": true
-    },
     "nextEvent": {
         "id": "1026422363643985950",
         "members": [
@@ -55,7 +39,7 @@
             "day": 6,
             "hour": 16,
             "minutes": 30,
-            "lastWeek": 40
+            "lastWeek": 42
         },
         {
             "sessionName": "The sus post-dinner",
@@ -64,21 +48,5 @@
             "minutes": 30,
             "lastWeek": 40
         }
-    ],
-    "1028059089785327636": {
-        "confirmed": false,
-        "reminded": false
-    },
-    "1028059091383353345": {
-        "confirmed": false,
-        "reminded": false
-    },
-    "1028314446701019166": {
-        "confirmed": false,
-        "reminded": false
-    },
-    "1028359747096825966": {
-        "confirmed": false,
-        "reminded": false
-    }
+    ]
 }

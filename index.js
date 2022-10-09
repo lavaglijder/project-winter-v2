@@ -8,8 +8,8 @@ dotenv.config()
 // Constants, to lazy to put it in a json config
 const PLAYERS_NEEDED = 6;
 const GUILD_ID = '894319824979787846';
-const MATCH_PLANNING_CHANNEL = '894323870922854471';
-const ANNOUNCEMENT_CHANNEL = '894323150362394665';
+const MATCH_PLANNING_CHANNEL = '894319824979787849';
+const ANNOUNCEMENT_CHANNEL = '894319824979787849';
 const VOICE_CHAT_CHANNEL = '894322416623443978';
 const PROJECT_WINTER_ROLE = '896496125681467412';
 const MATCH_PLANNING_ROLE = '1028021380089917471';
@@ -171,29 +171,34 @@ bot.on('ready', () => {
 
                 let users = event.userCount;
 
+                console.log(users, event.scheduledStartAt)
+
                 if(events[event.id].confirmed) return;
                 if(users < PLAYERS_NEEDED) {
-                    // Send a notification about a potential match to everyone 5 hours ahead if 1 player is needed
-                    if(event.scheduledStartAt.getTime() - new Date().getTime() < 1000 * 60 * 60 * 5) {
-                        if(events[event.id].reminded) return;
-                        if(users < PLAYERS_NEEDED - 1) return;
-                        event.guild.channels.resolve(MATCH_PLANNING_CHANNEL).send("<@&" + PROJECT_WINTER_ROLE + "> the following match is very close to have enough players please join :). \nIf you are interested to join please make sure to put yourself on interested in the event."+ 
-                        "\nhttps://discord.com/events/" + GUILD_ID + "/" + event.id);
-                        events[event.id].reminded = true;
-                        saveFile();
-                        return 
-                    }
                     // Cancel the session 2 * missingplayers
                     let missingPlayers = PLAYERS_NEEDED - users;
                     let hoursToBeCancelled = missingPlayers * 2;
-                    if(event.scheduledStartAt.getTime() - new Date().getTime() < 1000 * 60 * 60 * +hoursToBeCancelled) return; 
-                    event.guild.channels.resolve(MATCH_PLANNING_CHANNEL).send("The event for " + dateToString(event.scheduledStartAt) + " has been cancelled due to a little player count.");
-                    event.delete();
+                    if(missingPlayers == 1) hoursToBeCancelled = 1;
+                    if((event.scheduledStartAt.getTime() - new Date().getTime()) < (1000 * 60 * 60 * +hoursToBeCancelled)) {
+                        event.guild.channels.resolve(MATCH_PLANNING_CHANNEL).send("The event for " + dateToString(event.scheduledStartAt) + " has been cancelled due to a little player count.");
+                        // event.delete();
+                        return; 
+                    }
+
+                    // Send a notification about a potential match to everyone 5 hours ahead if 1 player is needed
+                    if((event.scheduledStartAt.getTime() - new Date().getTime()) > 1000 * 60 * 60 * 5) return;
+                    if(users < (PLAYERS_NEEDED - 1)) return;
+                    if(events[event.id].reminded) return;
+                    event.guild.channels.resolve(MATCH_PLANNING_CHANNEL).send("<@&" + PROJECT_WINTER_ROLE + "> the following match is very close to have enough players please join :). \nIf you are interested to join please make sure to put yourself on interested in the event."+ 
+                    "\nhttps://discord.com/events/" + GUILD_ID + "/" + event.id);
+                    events[event.id].reminded = true;
+                    saveFile();
                     return;
                 }
 
+                console.log((event.scheduledStartAt.getTime() - new Date().getTime() < 1000 * 60 * 60 * 5))
                 // Send reminder to everyone 5 hours ahead
-                if(event.scheduledStartAt.getTime() - new Date().getTime() < 1000 * 60 * 60 * 5) {
+                if((event.scheduledStartAt.getTime() - new Date().getTime()) < 1000 * 60 * 60 * 5) {
                     if(events[event.id].reminded) return;
                     events[event.id].reminded = true;
                     event.guild.channels.resolve(ANNOUNCEMENT_CHANNEL).send("<@&" + PROJECT_WINTER_ROLE + "> Reminder that this match is going to start today! \nIf you want to play together with us please make sure to put yourself as interested!"+ 

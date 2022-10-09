@@ -171,8 +171,6 @@ bot.on('ready', () => {
 
                 let users = event.userCount;
 
-                console.log(users, event.scheduledStartAt)
-
                 if(events[event.id].confirmed) return;
                 if(users < PLAYERS_NEEDED) {
                     // Cancel the session 2 * missingplayers
